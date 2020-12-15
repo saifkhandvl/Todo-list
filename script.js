@@ -4,7 +4,7 @@ const app=express();
 const mongoose=require('mongoose')
 const _=require("lodash");
 
-const date=require(__dirname+"\\date.js");
+
 
 app.use(express.static("puplic"))
 
@@ -48,7 +48,7 @@ const listSchema={
 
 
 app.get("/",function(req,res){
-	let day=date.getDate()
+	
 	Item.find({},function (err,found) {
 		
 			if(found.length===0){
@@ -66,7 +66,7 @@ app.get("/",function(req,res){
 
 
 			
-			res.render('list',{kindofday:day,listitem:found});
+			res.render('list',{kindofday:"Today",listitem:found});
 		
 		/* body... */
 	}})
@@ -86,7 +86,7 @@ app.post("/",function(req,res){
 		name:enter
 	})
 
-	if(but===date.getDate()){
+	if(but==="Today"){
 		item3.save();
 		res.redirect("/");
 
@@ -107,7 +107,7 @@ app.post("/",function(req,res){
 app.post("/delete",function (req,res) {
 	const checkid=(req.body.check)
 	const bh=req.body.list
-	if (bh===date.getDate()){
+	if (bh==="Today"){
 
 	Item.findByIdAndRemove(checkid,function (err) {
 		/* body... */if(err){
